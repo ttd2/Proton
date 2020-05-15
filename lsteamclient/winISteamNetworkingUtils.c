@@ -36,36 +36,36 @@ ESteamNetworkingAvailability __thiscall winISteamNetworkingUtils_SteamNetworking
     return cppISteamNetworkingUtils_SteamNetworkingUtils003_GetRelayNetworkStatus(_this->linux_side, pDetails);
 }
 
-DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_GetLocalPingLocation, 8)
-float __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_GetLocalPingLocation(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, SteamNetworkPingLocation_t * result)
+DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_GetLocalPingLocation, 516)
+float __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_GetLocalPingLocation(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, SteamNetworkPingLocation_t* result)
 {
     TRACE("%p\n", _this);
     return cppISteamNetworkingUtils_SteamNetworkingUtils003_GetLocalPingLocation(_this->linux_side, result);
 }
 
-DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeBetweenTwoLocations, 12)
-int __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeBetweenTwoLocations(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkPingLocation_t * location1, const SteamNetworkPingLocation_t * location2)
+DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeBetweenTwoLocations, 1028)
+int __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeBetweenTwoLocations(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkPingLocation_t* location1, const SteamNetworkPingLocation_t* location2)
 {
     TRACE("%p\n", _this);
     return cppISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeBetweenTwoLocations(_this->linux_side, location1, location2);
 }
 
-DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeFromLocalHost, 8)
-int __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeFromLocalHost(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkPingLocation_t * remoteLocation)
+DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeFromLocalHost, 516)
+int __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeFromLocalHost(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkPingLocation_t* remoteLocation)
 {
     TRACE("%p\n", _this);
     return cppISteamNetworkingUtils_SteamNetworkingUtils003_EstimatePingTimeFromLocalHost(_this->linux_side, remoteLocation);
 }
 
-DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_ConvertPingLocationToString, 16)
-void __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_ConvertPingLocationToString(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkPingLocation_t * location, char * pszBuf, int cchBufSize)
+DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_ConvertPingLocationToString, 524)
+void __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_ConvertPingLocationToString(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkPingLocation_t* location, char * pszBuf, int cchBufSize)
 {
     TRACE("%p\n", _this);
     cppISteamNetworkingUtils_SteamNetworkingUtils003_ConvertPingLocationToString(_this->linux_side, location, pszBuf, cchBufSize);
 }
 
-DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_ParsePingLocationString, 12)
-bool __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_ParsePingLocationString(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const char * pszString, SteamNetworkPingLocation_t * result)
+DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_ParsePingLocationString, 520)
+bool __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_ParsePingLocationString(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const char * pszString, SteamNetworkPingLocation_t* result)
 {
     TRACE("%p\n", _this);
     return cppISteamNetworkingUtils_SteamNetworkingUtils003_ParsePingLocationString(_this->linux_side, pszString, result);
@@ -148,8 +148,8 @@ ESteamNetworkingConfigValue __thiscall winISteamNetworkingUtils_SteamNetworkingU
     return cppISteamNetworkingUtils_SteamNetworkingUtils003_GetFirstConfigValue(_this->linux_side);
 }
 
-DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIPAddr_ToString, 20)
-void __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIPAddr_ToString(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkingIPAddr * addr, char * buf, size_t cbBuf, bool bWithPort)
+DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIPAddr_ToString, 36)
+void __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIPAddr_ToString(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkingIPAddr* addr, char * buf, size_t cbBuf, bool bWithPort)
 {
     TRACE("%p\n", _this);
     cppISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIPAddr_ToString(_this->linux_side, addr, buf, cbBuf, bWithPort);
@@ -162,8 +162,8 @@ bool __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworking
     return cppISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIPAddr_ParseString(_this->linux_side, pAddr, pszStr);
 }
 
-DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIdentity_ToString, 16)
-void __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIdentity_ToString(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkingIdentity * identity, char * buf, size_t cbBuf)
+DEFINE_THISCALL_WRAPPER(winISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIdentity_ToString, 148)
+void __thiscall winISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIdentity_ToString(winISteamNetworkingUtils_SteamNetworkingUtils003 *_this, const SteamNetworkingIdentity* identity, char * buf, size_t cbBuf)
 {
     TRACE("%p\n", _this);
     cppISteamNetworkingUtils_SteamNetworkingUtils003_SteamNetworkingIdentity_ToString(_this->linux_side, identity, buf, cbBuf);

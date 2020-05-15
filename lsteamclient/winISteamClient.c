@@ -73,8 +73,8 @@ winISteamGameServer * __thiscall winISteamClient_SteamClient020_GetISteamGameSer
         cppISteamClient_SteamClient020_GetISteamGameServer(_this->linux_side, hSteamUser, hSteamPipe, pchVersion));
 }
 
-DEFINE_THISCALL_WRAPPER(winISteamClient_SteamClient020_SetLocalIPBinding, 12)
-void __thiscall winISteamClient_SteamClient020_SetLocalIPBinding(winISteamClient_SteamClient020 *_this, const SteamIPAddress_t * unIP, uint16 usPort)
+DEFINE_THISCALL_WRAPPER(winISteamClient_SteamClient020_SetLocalIPBinding, 28)
+void __thiscall winISteamClient_SteamClient020_SetLocalIPBinding(winISteamClient_SteamClient020 *_this, const SteamIPAddress_t* unIP, uint16 usPort)
 {
     TRACE("%p\n", _this);
     cppISteamClient_SteamClient020_SetLocalIPBinding(_this->linux_side, unIP, usPort);

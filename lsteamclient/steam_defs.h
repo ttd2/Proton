@@ -283,6 +283,7 @@ typedef int64 SteamNetworkingMicroseconds;
 typedef uint32 HSteamListenSocket;
 typedef uint32 SteamNetworkingPOPID;
 typedef uint32 RemotePlaySessionID_t;
+typedef uint32 HSteamNetPollGroup;
 
 #pragma pack( push, 4 )
 typedef struct CallbackMsg_t
@@ -293,4 +294,6 @@ typedef struct CallbackMsg_t
     int m_cubParam;
 } CallbackMsg_t;
 #pragma pack( pop )
+
+typedef char SteamNetworkingErrMsg[1024];
 #endif

@@ -5,7 +5,7 @@
 
 from __future__ import print_function
 
-CLANG_PATH='/usr/lib/clang/9.0.0'
+CLANG_PATH='/usr/lib/clang/10.0.0'
 
 import pprint
 import sys
@@ -15,6 +15,7 @@ import re
 import math
 
 sdk_versions = [
+    "148a",
     "147",
     "146",
     "145",
@@ -186,6 +187,11 @@ manually_handled_methods = {
             "ReceiveMessagesOnConnection",
             "ReceiveMessagesOnListenSocket",
             "SendMessages"
+        ],
+        "cppISteamNetworkingSockets_SteamNetworkingSockets008": [
+            "ReceiveMessagesOnConnection",
+            "SendMessages",
+            "ReceiveMessagesOnPollGroup"
         ],
         "cppISteamNetworkingUtils_SteamNetworkingUtils003": [
             "AllocateMessage",
@@ -531,31 +537,31 @@ path_conversions = [
 
 def strip_const(typename):
     return typename.replace("const ", "", 1)
-
-def find_windows_struct(struct):
-    for child in list(windows_build.cursor.get_children()):
-        if strip_const(struct.spelling) == child.spelling:
+    
+def find_struct(struct, cursor):
+    for child in list(cursor.get_children()):
+        if struct.get_declaration().get_usr() == child.get_usr():
+            return child.type
+    for child in list(cursor.walk_preorder()):
+        if struct.get_declaration().get_usr() == child.get_usr():
             return child.type
     return None
+    
+def find_windows_struct(struct):
+    return find_struct(struct, windows_build.cursor)
 
 def find_windows64_struct(struct):
-    for child in list(windows_build64.cursor.get_children()):
-        if strip_const(struct.spelling) == child.spelling:
-            return child.type
-    return None
+    return find_struct(struct, windows_build64.cursor)
 
 def find_linux64_struct(struct):
-    for child in list(linux_build64.cursor.get_children()):
-        if strip_const(struct.spelling) == child.spelling:
-            return child.type
-    return None
-
+    return find_struct(struct, linux_build64.cursor)
+    
 def struct_needs_conversion_nocache(struct):
     if strip_const(struct.spelling) in exempt_structs:
         return False
     if strip_const(struct.spelling) in manually_handled_structs:
         return True
-
+        
     #check 32-bit compat
     windows_struct = find_windows_struct(struct)
     assert(not windows_struct is None) #must find windows_struct
@@ -670,14 +676,22 @@ def handle_method(cfile, classname, winclassname, cppname, method, cpp, cpp_h, e
     manual_convert = []
     for param in list(method.get_children()):
         if param.kind == clang.cindex.CursorKind.PARM_DECL:
-            if param.type.kind == clang.cindex.TypeKind.POINTER and \
+            dereftype = param.type
+            derefcount = 0
+            while dereftype.kind == clang.cindex.TypeKind.LVALUEREFERENCE:
+            	dereftype = param.type.get_pointee()
+            	derefcount = derefcount + 1
+            
+            if dereftype.kind == clang.cindex.TypeKind.POINTER and \
                     param.type.get_pointee().kind == clang.cindex.TypeKind.FUNCTIONPROTO:
                 #unspecified function pointer
                 typename = "void *"
             else:
-                typename = param.type.spelling.split("::")[-1];
-
-            real_type = param.type;
+                typename = dereftype.spelling.split("::")[-1];
+	    for x in range(0, derefcount):
+	    	typename += '*'
+	    	
+            real_type = dereftype
             while real_type.kind == clang.cindex.TypeKind.POINTER:
                 real_type = real_type.get_pointee()
             win_name = typename
@@ -776,6 +790,12 @@ def handle_method(cfile, classname, winclassname, cppname, method, cpp, cpp_h, e
     first = True
     for param in list(method.get_children()):
         if param.kind == clang.cindex.CursorKind.PARM_DECL:
+            dereftype = param.type
+            refspelling = param.spelling
+            while dereftype.kind == clang.cindex.TypeKind.LVALUEREFERENCE:
+            	dereftype = param.type.get_pointee()
+            	refspelling = "*" + refspelling
+            
             if not first:
                 cpp.write(", ")
             else:
@@ -787,19 +807,19 @@ def handle_method(cfile, classname, winclassname, cppname, method, cpp, cpp_h, e
             elif param.type.kind == clang.cindex.TypeKind.POINTER and \
                     param.type.get_pointee().spelling in wrapped_classes:
                 cfile.write(", create_Linux%s(%s, \"%s\")" % (param.type.get_pointee().spelling, param.spelling, winclassname))
-                cpp.write("(%s)%s" % (param.type.spelling, param.spelling))
+                cpp.write("(%s)%s" % (param.type.spelling, refspelling))
             elif path_conv and param.spelling in path_conv["w2l_names"]:
                 cfile.write(", %s ? lin_%s : NULL" % (param.spelling, param.spelling))
-                cpp.write("(%s)%s" % (param.type.spelling, param.spelling))
+                cpp.write("(%s)%s" % (param.type.spelling, refspelling))
             elif param in need_convert:
                 cfile.write(", %s" % param.spelling)
                 if param.type.kind != clang.cindex.TypeKind.POINTER:
-                    cpp.write("lin_%s" % (param.spelling))
+                    cpp.write("lin_%s" % (refspelling))
                 else:
-                    cpp.write("&lin_%s" % (param.spelling))
+                    cpp.write("&lin_%s" % (refspelling))
             else:
                 cfile.write(", %s" % param.spelling)
-                cpp.write("(%s)%s" % (param.type.spelling, param.spelling))
+                cpp.write("(%s)%s" % (param.type.spelling, refspelling))
     if should_gen_wrapper:
         cfile.write(")")
     cfile.write(");\n")

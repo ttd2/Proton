@@ -5,7 +5,7 @@ extern HSteamUser cppISteamClient_SteamClient020_CreateLocalUser(void *, HSteamP
 extern void cppISteamClient_SteamClient020_ReleaseUser(void *, HSteamPipe, HSteamUser);
 extern void *cppISteamClient_SteamClient020_GetISteamUser(void *, HSteamUser, HSteamPipe, const char *);
 extern void *cppISteamClient_SteamClient020_GetISteamGameServer(void *, HSteamUser, HSteamPipe, const char *);
-extern void cppISteamClient_SteamClient020_SetLocalIPBinding(void *, const SteamIPAddress_t *, uint16);
+extern void cppISteamClient_SteamClient020_SetLocalIPBinding(void *, const SteamIPAddress_t*, uint16);
 extern void *cppISteamClient_SteamClient020_GetISteamFriends(void *, HSteamUser, HSteamPipe, const char *);
 extern void *cppISteamClient_SteamClient020_GetISteamUtils(void *, HSteamPipe, const char *);
 extern void *cppISteamClient_SteamClient020_GetISteamMatchmaking(void *, HSteamUser, HSteamPipe, const char *);

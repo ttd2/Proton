@@ -1,14 +1,14 @@
 #include "steam_defs.h"
 #pragma push_macro("__cdecl")
 #undef __cdecl
-#include "steamworks_sdk_147/steam_api.h"
-#include "steamworks_sdk_147/steamnetworkingtypes.h"
+#include "steamworks_sdk_148a/steam_api.h"
+#include "steamworks_sdk_148a/steamnetworkingtypes.h"
 #pragma pop_macro("__cdecl")
 #include "steamclient_private.h"
 #ifdef __cplusplus
 extern "C" {
 #endif
-#define SDKVER_147
+#define SDKVER_148a
 #include "struct_converters.h"
 #include "cppISteamClient_SteamClient020.h"
 HSteamPipe cppISteamClient_SteamClient020_CreateSteamPipe(void *linux_side)
@@ -46,9 +46,9 @@ void *cppISteamClient_SteamClient020_GetISteamGameServer(void *linux_side, HStea
     return ((ISteamClient*)linux_side)->GetISteamGameServer((HSteamUser)hSteamUser, (HSteamPipe)hSteamPipe, (const char *)pchVersion);
 }
 
-void cppISteamClient_SteamClient020_SetLocalIPBinding(void *linux_side, const SteamIPAddress_t * unIP, uint16 usPort)
+void cppISteamClient_SteamClient020_SetLocalIPBinding(void *linux_side, const SteamIPAddress_t* unIP, uint16 usPort)
 {
-    ((ISteamClient*)linux_side)->SetLocalIPBinding((const SteamIPAddress_t *)unIP, (uint16)usPort);
+    ((ISteamClient*)linux_side)->SetLocalIPBinding((const SteamIPAddress_t &)*unIP, (uint16)usPort);
 }
 
 void *cppISteamClient_SteamClient020_GetISteamFriends(void *linux_side, HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char * pchVersion)
